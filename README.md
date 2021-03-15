@@ -8,19 +8,19 @@
 
 1. Install `pipenv` (if not already installed):
 
-	python3 -m pip install --user pipenv
+		python3 -m pip install --user pipenv
 
 2. Create virtual environment for project:
 
-	pipenv shell
+		pipenv shell
 
 3. Install required packages into virtual environment (including development):
 
-	pipenv install --dev
+		pipenv install --dev
 
 4. Run the application (as a local development server):
 
-	FLASK_ENV=dev python app.py
+		FLASK_ENV=dev python app.py
 
 
 **Note:** When creating a new project from this template, feel free to adjust 
