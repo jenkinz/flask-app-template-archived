@@ -39,4 +39,11 @@ def add_movie():
     return {"id": len(movie_entries)}, 201  # 201 CREATED (success)
 
 
+@app.route("/movies/<int:index>", methods=["PUT"])
+def update_movie(index):
+    movie = request.get_json()
+    movie_entries[index] = movie
+    return jsonify(movie_entries[index])
+
+
 app.run()
