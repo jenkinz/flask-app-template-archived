@@ -21,3 +21,9 @@
 4. Run the application (as a local development server):
 
 	FLASK_ENV=dev python app.py
+
+
+**Note:** When creating a new project from this template, feel free to adjust 
+the package dependency versions used by installing the desired versions into 
+the virtual environment and running `pipenv lock`. Then, commit the modified 
+`Pipfile.lock` file. 
