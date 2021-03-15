@@ -10,7 +10,7 @@
 
 		python3 -m pip install --user pipenv
 
-2. Create virtual environment for project:
+2. Create and activate virtual environment for project:
 
 		pipenv shell
 
@@ -29,6 +29,12 @@
 the package dependency versions used by installing the desired versions into 
 the virtual environment and running `pipenv lock`. Then, commit the modified 
 `Pipfile.lock` file. 
+
+## Other Tools and Recommendations
+
+- For testing a REST API, install [Postman](https://www.getpostman.com/downloads/)
+- Follow REST HTTP method best practices while implementing an API: 
+  https://restfulapi.net/http-methods/  
 
 ## TODOs
 
