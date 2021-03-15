@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import jsonify
+from flask import request
 
 app = Flask(__name__)
 
@@ -26,7 +27,16 @@ movie_entries = [
 @app.route("/")
 @app.route("/movies")
 def movies():
+    """Return all movie entries."""
     return jsonify(movie_entries)
+
+
+@app.route("/movies", methods=["POST"])
+def add_movie():
+    """Add a movie entry."""
+    movie = request.get_json()
+    movie_entries.append(movie)
+    return {"id": len(movie_entries)}, 201  # 201 CREATED (success)
 
 
 app.run()
