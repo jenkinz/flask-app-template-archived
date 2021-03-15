@@ -29,3 +29,8 @@
 the package dependency versions used by installing the desired versions into 
 the virtual environment and running `pipenv lock`. Then, commit the modified 
 `Pipfile.lock` file. 
+
+## TODOs
+
+1. Add tests (run with `pytest`)
+2. Add `tox` configuration (to run lint and tests with multiple python versions)
