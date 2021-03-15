@@ -1,14 +1,29 @@
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask_restful import abort
+from flask_restful import Api
+from flask_restful import Resource
 
 app = Flask(__name__)
+api = Api(app)
 
 
-movie_entries = [
+class HelloWorld(Resource):
+    """Hello world example"""
+
+    def get(self):
+        return {"hello": "world"}
+
+
+movies = [
     {
         "name": "Terminator 2: Judgment Day",
-        "cast": ["Arnold Schwarzenegger", "Linda Hamilton", "Joe Morton"],
+        "cast": [
+            "Arnold Schwarzenegger",
+            "Linda Hamilton",
+            "Joe Morton",
+        ],
         "genres": ["Action", "Sci-Fi"],
     },
     {
@@ -24,37 +39,52 @@ movie_entries = [
 ]
 
 
-@app.route("/")
-@app.route("/movies")
-def movies():
-    """Return all movie entries."""
-    return jsonify(movie_entries)
+def abort_if_movie_doesnt_exist(movie_id):
+    """Check if movie_id is valid, and abort the request if invalid."""
+    if movie_id >= len(movies):
+        abort(404, message="Movie {} doesn't exist".format(movie_id))
 
 
-@app.route("/movies", methods=["POST"])
-def add_movie():
-    """Add a movie entry."""
-    movie = request.get_json()
-    movie_entries.append(movie)
-    return {"id": len(movie_entries)}, 201  # 201 CREATED (success)
+class Movies(Resource):
+    """Get a list of all movies, or POST to add new movies."""
+
+    def get(self):
+        """Return a list of all movies."""
+        return jsonify(movies)
+
+    def post(self):
+        """Create a movie."""
+        movie = request.get_json()
+        movies.append(movie)
+        return {"id": len(movies) - 1}, 201  # 201 CREATED (success)
 
 
-@app.route("/movies/<int:index>", methods=["PUT"])
-def update_movie(index):
-    """Update a movie entry."""
-    movie = request.get_json()
-    movie_entries[index] = movie
-    return jsonify(movie_entries[index])
+class Movie(Resource):
+    """Get a single movie, update a movie or delete a movie."""
+
+    def get(self, movie_id):
+        """Get a single movie."""
+        abort_if_movie_doesnt_exist(movie_id)
+        return jsonify(movies[movie_id])
+
+    def put(self, movie_id):
+        """Update a movie."""
+        abort_if_movie_doesnt_exist(movie_id)
+        movie = request.get_json()
+        movies[movie_id] = movie
+        return jsonify(movies[movie_id])
+
+    def delete(self, movie_id):
+        """Delete a movie."""
+        abort_if_movie_doesnt_exist(movie_id)
+        movies.pop(movie_id)
+        return "", 200
 
 
-@app.route("/movies/<int:index>", methods=["DELETE"])
-def delete_movie(index):
-    """Delete a movie entry."""
-    if index < len(movie_entries):
-        movie_entries.pop(index)
-        return "None", 200
-    else:
-        return "Not Found", 404
+api.add_resource(HelloWorld, "/")
+api.add_resource(Movies, "/movies")
+api.add_resource(Movie, "/movies/<int:movie_id>")
 
 
-app.run()
+if __name__ == "__main__":
+    app.run()
