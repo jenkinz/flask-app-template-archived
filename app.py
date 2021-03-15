@@ -41,9 +41,20 @@ def add_movie():
 
 @app.route("/movies/<int:index>", methods=["PUT"])
 def update_movie(index):
+    """Update a movie entry."""
     movie = request.get_json()
     movie_entries[index] = movie
     return jsonify(movie_entries[index])
+
+
+@app.route("/movies/<int:index>", methods=["DELETE"])
+def delete_movie(index):
+    """Delete a movie entry."""
+    if index < len(movie_entries):
+        movie_entries.pop(index)
+        return "None", 200
+    else:
+        return "Not Found", 404
 
 
 app.run()
