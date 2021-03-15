@@ -14,9 +14,11 @@
 
 		pipenv shell
 
-3. Install required packages into virtual environment (including development):
+3. Install required packages into virtual environment (including development)
+   and activate the required `pre-commit` hooks:
 
 		pipenv install --dev
+		pre-commit install
 
 4. Run the application (as a local development server):
 
