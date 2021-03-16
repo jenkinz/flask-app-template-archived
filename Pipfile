@@ -16,7 +16,7 @@ tox = "*"
 
 [packages]
 flask = "*"
-flask-restful = "*"
+flask-restx = "*"
 
 [requires]
 python_version = "3.8"

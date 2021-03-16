@@ -1,14 +1,15 @@
 from flask import Flask
 from flask import jsonify
 from flask import request
-from flask_restful import abort
-from flask_restful import Api
-from flask_restful import Resource
+from flask_restx import abort
+from flask_restx import Api
+from flask_restx import Resource
 
 app = Flask(__name__)
 api = Api(app)
 
 
+@api.route("/")
 class HelloWorld(Resource):
     """Hello world example"""
 
@@ -45,6 +46,7 @@ def abort_if_movie_doesnt_exist(movie_id):
         abort(404, message="Movie {} doesn't exist".format(movie_id))
 
 
+@api.route("/movies")
 class Movies(Resource):
     """Get a list of all movies, or POST to add new movies."""
 
@@ -59,6 +61,7 @@ class Movies(Resource):
         return {"id": len(movies) - 1}, 201  # 201 CREATED (success)
 
 
+@api.route("/movies/<int:movie_id>")
 class Movie(Resource):
     """Get a single movie, update a movie or delete a movie."""
 
@@ -79,11 +82,6 @@ class Movie(Resource):
         abort_if_movie_doesnt_exist(movie_id)
         movies.pop(movie_id)
         return "", 200
-
-
-api.add_resource(HelloWorld, "/")
-api.add_resource(Movies, "/movies")
-api.add_resource(Movie, "/movies/<int:movie_id>")
 
 
 if __name__ == "__main__":
