@@ -38,5 +38,9 @@ the virtual environment and running `pipenv lock`. Then, commit the modified
 
 ## TODOs
 
-1. Add tests (run with `pytest`)
-2. Add `tox` configuration (to run lint and tests with multiple python versions)
+- Add tests (run with `pytest`)
+- Add `tox` configuration (to run lint and tests with multiple python versions)
+- Make into a package (currently a module)
+- Add database (SQLAlchemy)
+- Review http://alanpryorjr.com/2019-05-20-flask-api-example/ for best pratcies 
+  including test-driven development (TDD)
